@@ -1,6 +1,6 @@
-// RC Bot — Secure Anthropic API Proxy
+// RC Bot — Secure Gemini API Proxy (100% FREE TIER)
 // Your API key NEVER touches the browser — it only lives here on Netlify's servers
-// Set your key in: Netlify Dashboard → Site → Environment Variables → RC
+// Set your key in: Netlify Dashboard → Site configuration → Environment variables → GEMINI_API_KEY
 
 const RC_SYSTEM = `You are RC, the friendly and knowledgeable AI assistant for RC's Anantha — a digital solutions agency based in Anantapur, Andhra Pradesh, India. You were created by Chandan, the founder of RC's Anantha.
 
@@ -68,7 +68,7 @@ HOW TO BEHAVE:
 - Always end with a CTA to WhatsApp Chandan: +91 91485 29970
 - If asked something outside your knowledge, offer to connect them with Chandan
 - Speak English by default; match user's language if they write in Telugu or Hindi
-- You are RC — not ChatGPT, not Claude. Never reveal you are built on Claude.
+- You are RC — not ChatGPT, not Claude. 
 - Keep replies concise — no walls of text`;
 
 exports.handler = async function (event) {
@@ -77,7 +77,7 @@ exports.handler = async function (event) {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  // Ironclad CORS headers for cross-domain split architecture
+  // Ironclad CORS headers
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
@@ -97,25 +97,30 @@ exports.handler = async function (event) {
       return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid request' }) };
     }
 
-    // Using your exact variable name
-    const apiKey = process.env.RC;
+    // Pulling the Gemini key from Netlify Environment Variables
+    const apiKey = process.env.GEMINI_API_KEY;
     if (!apiKey) {
-      return { statusCode: 500, headers, body: JSON.stringify({ error: 'API key not configured on server' }) };
+      return { statusCode: 500, headers, body: JSON.stringify({ error: 'GEMINI_API_KEY not configured on server' }) };
     }
 
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    // Translate frontend format to Gemini format
+    const formattedMessages = messages.map(msg => ({
+      role: msg.role === 'assistant' ? 'model' : 'user',
+      parts: [{ text: msg.content }]
+    }));
+
+    // Hit the free Gemini 1.5 Flash endpoint
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        model: 'claude-3-haiku-20240307',
-        max_tokens: 500,
-        system: RC_SYSTEM,
-        messages: messages.slice(-10),
-      }),
+        systemInstruction: {
+          parts: [{ text: RC_SYSTEM }]
+        },
+        contents: formattedMessages
+      })
     });
 
     const data = await response.json();
@@ -124,10 +129,13 @@ exports.handler = async function (event) {
       return { statusCode: 500, headers, body: JSON.stringify({ error: data.error.message }) };
     }
 
+    // Extract the text reply from Gemini's response structure
+    const replyText = data.candidates[0].content.parts[0].text;
+
     return {
       statusCode: 200,
       headers,
-      body: JSON.stringify({ reply: data.content[0].text }),
+      body: JSON.stringify({ reply: replyText }),
     };
 
   } catch (err) {
