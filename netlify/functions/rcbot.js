@@ -1,6 +1,6 @@
 // RC Bot — Secure Gemini API Proxy (100% FREE TIER)
 // Your API key NEVER touches the browser — it only lives here on Netlify's servers
-// Set your key in: Netlify Dashboard → Site configuration → Environment variables → GEMINI_API_KEY
+// Set your key in: Netlify Dashboard → Site configuration → Environment variables → rc
 
 const RC_SYSTEM = `You are RC, the friendly and knowledgeable AI assistant for RC's Anantha — a digital solutions agency based in Anantapur, Andhra Pradesh, India. You were created by Chandan, the founder of RC's Anantha.
 
@@ -72,12 +72,10 @@ HOW TO BEHAVE:
 - Keep replies concise — no walls of text`;
 
 exports.handler = async function (event) {
-  // Only allow POST
   if (event.httpMethod !== 'POST' && event.httpMethod !== 'OPTIONS') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  // Ironclad CORS headers
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
@@ -85,7 +83,6 @@ exports.handler = async function (event) {
     'Content-Type': 'application/json',
   };
 
-  // Handle CORS preflight
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 200, headers, body: '' };
   }
@@ -102,24 +99,31 @@ exports.handler = async function (event) {
     if (!apiKey) {
       return { statusCode: 500, headers, body: JSON.stringify({ error: 'API key not configured on server' }) };
     }
-   
 
     // Translate frontend format to Gemini format
-    const formattedMessages = messages.map(msg => ({
+    let formattedMessages = messages.map(msg => ({
       role: msg.role === 'assistant' ? 'model' : 'user',
       parts: [{ text: msg.content }]
     }));
 
-    // Hit the free Gemini 1.5 Flash endpoint
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${apiKey}`, {
+    // Gemini strictly requires the first message in the chain to be from a 'user'.
+    if (formattedMessages.length > 0 && formattedMessages[0].role === 'model') {
+      formattedMessages.shift();
+    }
+
+    // Inject the System Prompt into the very first user message. 
+    // This guarantees 100% compatibility with the universal 'gemini-pro' model.
+    if (formattedMessages.length > 0) {
+      formattedMessages[0].parts[0].text = "SYSTEM INSTRUCTIONS:\n" + RC_SYSTEM + "\n\nUSER MESSAGE:\n" + formattedMessages[0].parts[0].text;
+    }
+
+    // Hit the universally supported gemini-pro endpoint
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        systemInstruction: {
-          parts: [{ text: RC_SYSTEM }]
-        },
         contents: formattedMessages
       })
     });
@@ -130,7 +134,6 @@ exports.handler = async function (event) {
       return { statusCode: 500, headers, body: JSON.stringify({ error: data.error.message }) };
     }
 
-    // Extract the text reply from Gemini's response structure
     const replyText = data.candidates[0].content.parts[0].text;
 
     return {
