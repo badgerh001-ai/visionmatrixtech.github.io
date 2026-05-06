@@ -1,6 +1,6 @@
 // RC Bot — Secure Anthropic API Proxy
 // Your API key NEVER touches the browser — it only lives here on Netlify's servers
-// Set your key in: Netlify Dashboard → Site → Environment Variables → ANTHROPIC_API_KEY
+// Set your key in: Netlify Dashboard → Site → Environment Variables → RC
 
 const RC_SYSTEM = `You are RC, the friendly and knowledgeable AI assistant for RC's Anantha — a digital solutions agency based in Anantapur, Andhra Pradesh, India. You were created by Chandan, the founder of RC's Anantha.
 
@@ -73,11 +73,11 @@ HOW TO BEHAVE:
 
 exports.handler = async function (event) {
   // Only allow POST
-  if (event.httpMethod !== 'POST') {
+  if (event.httpMethod !== 'POST' && event.httpMethod !== 'OPTIONS') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  // CORS headers
+  // Ironclad CORS headers for cross-domain split architecture
   const headers = {
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
@@ -97,7 +97,8 @@ exports.handler = async function (event) {
       return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid request' }) };
     }
 
-    const apiKey = process.env.ANTHROPIC_API_KEY;
+    // Using your exact variable name
+    const apiKey = process.env.RC;
     if (!apiKey) {
       return { statusCode: 500, headers, body: JSON.stringify({ error: 'API key not configured on server' }) };
     }
