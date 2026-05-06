@@ -1,6 +1,6 @@
 // RC Bot — Secure Anthropic API Proxy
 // Your API key NEVER touches the browser — it only lives here on Netlify's servers
-// Set your key in: Netlify Dashboard → Site → Environment Variables → ANTHROPIC_API_KEY
+// Set your key in: Netlify Dashboard → Site → Environment Variables → RC
 
 const RC_SYSTEM = `You are RC, the friendly and knowledgeable AI assistant for RC's Anantha — a digital solutions agency based in Anantapur, Andhra Pradesh, India. You were created by Chandan, the founder of RC's Anantha.
 
@@ -77,9 +77,9 @@ exports.handler = async function (event) {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  // CORS headers — allows your website to call this function
+  // CORS headers
   const headers = {
-    'Access-Control-Allow-Origin': '*',  // ← change to your domain
+    'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Content-Type': 'application/json',
   };
@@ -96,8 +96,8 @@ exports.handler = async function (event) {
       return { statusCode: 400, headers, body: JSON.stringify({ error: 'Invalid request' }) };
     }
 
-    // API key comes from Netlify environment variable — NEVER from the browser
-    const apiKey = process.env.ANTHROPIC_API_KEY;
+    // ✅ FIXED: was ANTHROPIC_API_KEY, your Netlify variable is named RC
+    const apiKey = process.env.RC;
     if (!apiKey) {
       return { statusCode: 500, headers, body: JSON.stringify({ error: 'API key not configured on server' }) };
     }
@@ -110,10 +110,10 @@ exports.handler = async function (event) {
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-3-haiku-20240307',
+        model: 'claude-haiku-4-5-20251001', // ✅ FIXED: updated to current model
         max_tokens: 500,
         system: RC_SYSTEM,
-        messages: messages.slice(-10), // last 10 messages for context
+        messages: messages.slice(-10),
       }),
     });
 
