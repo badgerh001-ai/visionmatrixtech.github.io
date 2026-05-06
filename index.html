@@ -1401,5 +1401,312 @@ var drObs=new IntersectionObserver(function(entries){
 var drEl=document.querySelector('#digital-reality');
 if(drEl)drObs.observe(drEl);
 </script>
+<!-- ============================================================
+     RC BOT — AI ASSISTANT FOR RC's ANANTHA
+     STEP TO ACTIVATE: Replace YOUR_API_KEY_HERE with your real key
+     Get free key at: console.anthropic.com → API Keys → Create Key
+     ============================================================ -->
+
+<style>
+/* RC BOT STYLES */
+#rc-bot-toggle{position:fixed;left:20px;bottom:80px;width:58px;height:58px;border-radius:50%;background:linear-gradient(135deg,var(--navy-dark),var(--navy));border:2.5px solid var(--gold);box-shadow:0 6px 24px rgba(27,58,107,0.4);cursor:pointer;z-index:98;display:flex;align-items:center;justify-content:center;transition:transform 0.25s,box-shadow 0.25s;overflow:hidden;flex-direction:column;gap:1px;}
+#rc-bot-toggle:hover{transform:scale(1.08);box-shadow:0 10px 32px rgba(27,58,107,0.55);}
+#rc-bot-toggle .rc-av-text{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-weight:700;color:var(--gold);line-height:1;}
+#rc-bot-toggle .rc-av-sub{font-size:0.45rem;color:rgba(255,255,255,0.65);letter-spacing:0.06em;text-transform:uppercase;font-family:'Outfit',sans-serif;}
+#rc-bot-toggle .rc-online-dot{position:absolute;top:5px;right:5px;width:10px;height:10px;background:#22c55e;border-radius:50%;border:2px solid #fff;animation:rcPulse 2s infinite;}
+@keyframes rcPulse{0%,100%{box-shadow:0 0 0 0 rgba(34,197,94,0.5);}50%{box-shadow:0 0 0 5px rgba(34,197,94,0);}}
+#rc-bot-badge{position:absolute;top:-4px;right:-4px;background:#ef4444;color:#fff;font-size:0.6rem;font-weight:800;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Outfit',sans-serif;border:2px solid #fff;animation:rcBounce 0.5s ease;}
+@keyframes rcBounce{0%{transform:scale(0);}70%{transform:scale(1.2);}100%{transform:scale(1);}}
+#rc-bot-window{position:fixed;left:20px;bottom:148px;width:340px;max-height:520px;background:#fff;border-radius:20px;box-shadow:0 20px 60px rgba(14,32,71,0.22);z-index:97;display:none;flex-direction:column;overflow:hidden;border:1.5px solid rgba(201,168,76,0.25);animation:rcSlideUp 0.3s cubic-bezier(0.16,1,0.3,1);}
+#rc-bot-window.open{display:flex;}
+@keyframes rcSlideUp{from{opacity:0;transform:translateY(20px) scale(0.96);}to{opacity:1;transform:translateY(0) scale(1);}}
+#rc-bot-header{background:linear-gradient(135deg,var(--navy-dark),var(--navy));padding:14px 16px;display:flex;align-items:center;gap:10px;flex-shrink:0;}
+#rc-bot-header .rc-hdr-av{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,rgba(201,168,76,0.3),rgba(201,168,76,0.1));border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--gold);flex-shrink:0;}
+#rc-bot-header .rc-hdr-info{flex:1;}
+#rc-bot-header .rc-hdr-name{font-size:0.92rem;font-weight:700;color:#fff;font-family:'Outfit',sans-serif;}
+#rc-bot-header .rc-hdr-status{font-size:0.68rem;color:rgba(255,255,255,0.55);display:flex;align-items:center;gap:4px;margin-top:1px;}
+#rc-bot-header .rc-hdr-status span{width:6px;height:6px;background:#22c55e;border-radius:50%;display:inline-block;}
+#rc-bot-close{background:none;border:none;color:rgba(255,255,255,0.5);font-size:1.1rem;cursor:pointer;padding:4px;line-height:1;transition:color 0.2s;flex-shrink:0;}
+#rc-bot-close:hover{color:#fff;}
+#rc-bot-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth;}
+#rc-bot-msgs::-webkit-scrollbar{width:4px;}
+#rc-bot-msgs::-webkit-scrollbar-track{background:transparent;}
+#rc-bot-msgs::-webkit-scrollbar-thumb{background:rgba(27,58,107,0.15);border-radius:4px;}
+.rc-msg{max-width:86%;padding:9px 12px;border-radius:12px;font-size:0.84rem;line-height:1.6;font-family:'Outfit',sans-serif;word-break:break-word;}
+.rc-msg.bot{background:linear-gradient(135deg,#f0f4ff,#e8eeff);color:#1e293b;align-self:flex-start;border-radius:4px 12px 12px 12px;border-left:3px solid var(--navy);}
+.rc-msg.user{background:linear-gradient(135deg,var(--navy),var(--navy-light));color:#fff;align-self:flex-end;border-radius:12px 4px 12px 12px;}
+.rc-msg.typing{background:#f0f4ff;align-self:flex-start;border-radius:4px 12px 12px 12px;border-left:3px solid var(--navy);display:flex;gap:5px;align-items:center;padding:12px 16px;}
+.rc-dot{width:7px;height:7px;border-radius:50%;background:var(--navy);opacity:0.4;animation:rcTyping 1.2s ease-in-out infinite;}
+.rc-dot:nth-child(2){animation-delay:0.2s;}
+.rc-dot:nth-child(3){animation-delay:0.4s;}
+@keyframes rcTyping{0%,100%{opacity:0.4;transform:translateY(0);}50%{opacity:1;transform:translateY(-4px);}}
+.rc-quick-chips{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 10px;}
+.rc-chip{background:#f0f4ff;border:1px solid rgba(27,58,107,0.15);color:var(--navy);font-size:0.72rem;font-weight:600;padding:5px 10px;border-radius:20px;cursor:pointer;transition:all 0.2s;font-family:'Outfit',sans-serif;white-space:nowrap;}
+.rc-chip:hover{background:var(--navy);color:#fff;border-color:var(--navy);}
+#rc-bot-input-row{padding:10px 12px;border-top:1px solid rgba(27,58,107,0.08);display:flex;gap:8px;flex-shrink:0;background:#fafafa;}
+#rc-bot-input{flex:1;border:1.5px solid rgba(27,58,107,0.15);border-radius:10px;padding:9px 12px;font-size:0.84rem;font-family:'Outfit',sans-serif;color:var(--text);outline:none;background:#fff;transition:border-color 0.2s;resize:none;}
+#rc-bot-input:focus{border-color:var(--navy);}
+#rc-bot-send{width:36px;height:36px;border-radius:10px;background:var(--navy);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;flex-shrink:0;align-self:flex-end;}
+#rc-bot-send:hover{background:var(--navy-light);}
+#rc-bot-send svg{width:15px;height:15px;fill:#fff;}
+#rc-bot-footer{text-align:center;padding:5px 12px 8px;font-size:0.62rem;color:var(--muted);font-family:'Outfit',sans-serif;background:#fafafa;}
+/* Mobile bot positioning */
+@media(max-width:768px){
+  #rc-bot-toggle{left:16px;bottom:135px;width:52px;height:52px;}
+  #rc-bot-window{left:10px;right:10px;width:auto;bottom:200px;max-height:420px;}
+}
+</style>
+
+<!-- RC BOT TOGGLE BUTTON -->
+<div id="rc-bot-toggle" onclick="rcToggle()" title="Chat with RC — AI Assistant">
+  <div class="rc-online-dot"></div>
+  <div class="rc-av-text">RC</div>
+  <div class="rc-av-sub">AI Bot</div>
+  <div id="rc-bot-badge" style="display:none;">1</div>
+</div>
+
+<!-- RC BOT CHAT WINDOW -->
+<div id="rc-bot-window">
+  <div id="rc-bot-header">
+    <div class="rc-hdr-av">RC</div>
+    <div class="rc-hdr-info">
+      <div class="rc-hdr-name">RC — Digital Assistant</div>
+      <div class="rc-hdr-status"><span></span> Online · RC's Anantha</div>
+    </div>
+    <button id="rc-bot-close" onclick="rcToggle()">✕</button>
+  </div>
+  <div id="rc-bot-msgs"></div>
+  <div class="rc-quick-chips" id="rc-chips">
+    <div class="rc-chip" onclick="rcChip(this)">Website packages</div>
+    <div class="rc-chip" onclick="rcChip(this)">Pricing &amp; offers</div>
+    <div class="rc-chip" onclick="rcChip(this)">Mobile apps</div>
+    <div class="rc-chip" onclick="rcChip(this)">SEO services</div>
+    <div class="rc-chip" onclick="rcChip(this)">How to get started</div>
+    <div class="rc-chip" onclick="rcChip(this)">AMC plans</div>
+  </div>
+  <div id="rc-bot-input-row">
+    <input id="rc-bot-input" type="text" placeholder="Ask me anything about RC's Anantha…" autocomplete="off" onkeydown="if(event.key==='Enter')rcSend()"/>
+    <button id="rc-bot-send" onclick="rcSend()">
+      <svg viewBox="0 0 24 24"><path d="M2 21l21-9L2 3v7l15 2-15 2v7z"/></svg>
+    </button>
+  </div>
+  <div id="rc-bot-footer">Powered by Claude AI · RC's Anantha</div>
+</div>
+
+<script>
+/* ============================================================
+   RC BOT — CONFIGURATION
+   ⚠️ REPLACE THE KEY BELOW WITH YOUR ACTUAL API KEY
+   Get it FREE at: https://console.anthropic.com
+   ============================================================ */
+var RC_API_KEY = 'YOUR_API_KEY_HERE';
+
+var RC_SYSTEM = `You are RC, the friendly and knowledgeable AI assistant for RC's Anantha — a digital solutions agency based in Anantapur, Andhra Pradesh, India. You were created by Chandan, the founder of RC's Anantha.
+
+ABOUT RC'S ANANTHA:
+- Founded by Chandan, who has 10+ years in sales & marketing (Honda Cars, Tata Motors EV, TVS Motor Company)
+- Based in Anantapur, AP — the ONLY local digital agency in the region
+- Website: rcanantha.com | Phone: +91 91485 29970 | Email: chandan@rcanantha.com | Instagram: @rc_anantha
+- Tagline: Infinite Vision. Diverse Growth.
+
+WEBSITE PACKAGES (one-time payment):
+1. Launch — ₹5,000 (₹4,500 with RCLAUNCH) | 1-page site | Live in 7 days | Shops, startups, new businesses
+   Features: Mobile responsive, WhatsApp button, Google Maps, Contact form+email alert, Basic SEO, SSL, Speed optimization, Social media links, 1 revision + 30-day support
+
+2. Standard — ₹10,000 (₹9,000 with RCLAUNCH) | MOST POPULAR | Live in 10 days | Clinics, dealers, coaching, hotels
+   Features: 3–5 page custom website, Lead capture + auto email, WhatsApp integration + auto reply, Full on-page SEO, Google Analytics + Search Console, Google Business Profile setup, Services+Products section, Testimonials+Team section, SSL+Security+Speed, 2 revisions + 60-day support
+
+3. Growth — ₹18,000 (₹16,200 with RCLAUNCH) | Live in 15 days | Hospitals, Real Estate, multi-page businesses
+   Features: 6–10 page full custom website, Product/Service catalogue, CRM lead form, Advanced SEO + Schema Markup, Google Maps + Local SEO, WhatsApp auto-response flow, Blog/News/Gallery, Testimonials+Reviews, Monthly analytics report, 3 revisions + 45-day support
+
+4. Premium — ₹30,000 (₹27,000 with RCLAUNCH) | Live in 25 days | E-commerce, enterprise, multi-branch
+   Features: Custom design + E-commerce store, Online payment (Razorpay/UPI), Inventory management, CRM + WhatsApp automation, Complete SEO + Google Ads setup, AI Chatbot integration (1 month), Customer login/Member portal, Staff training (1 hour), Unlimited revisions + 60-day support, Free 1-month Basic AMC
+
+GRAND LAUNCH OFFER: Use code RCLAUNCH for 10% OFF all packages, 5% OFF all add-ons. Limited to first 20 clients. 1 referral = 3 months Basic AMC FREE.
+
+ADD-ON SERVICES:
+Mobile Apps:
+- AppSheet No-Code App (FAST): ₹8,999–₹25,000 — booking, inventory, tracking app ready in days
+- FlutterFlow Android + iOS App (POPULAR): ₹35,000–₹80,000 — one build for both platforms
+
+CRM & Business Software:
+- Basic CRM Setup: ₹12,000–₹20,000 — lead capture, follow-ups, pipeline via AppSheet + Google Sheets
+- Advanced CRM with Billing: ₹25,000–₹50,000 — invoicing, payment tracking, WhatsApp alerts
+
+AI & Automation:
+- AI Chatbot for Website (NEW): ₹3,999 setup + ₹999/month — 24/7 FAQ answering, lead qualification
+- WhatsApp Business API Bot: ₹5,999 setup + ₹999/month — auto-replies, order confirmations
+- Lead Flow Automation: ₹8,000–₹15,000 — website to CRM to WhatsApp to email, fully automatic
+
+Brand, Marketing & Add-ons:
+- Google Business Profile Setup: ₹1,999 one-time
+- Online Payment Gateway (Razorpay/UPI): ₹2,999 one-time
+- Online Booking System: ₹2,499 one-time
+- Logo & Brand Identity: ₹4,999–₹9,999
+- Social Media Management: ₹3,999/month (12 posts on Instagram + Facebook)
+- Google Ads or Meta Ads: ₹4,999/month + ad spend
+
+AMC PLANS (Annual Maintenance Contract — billed yearly):
+- Basic: ₹499/month (₹5,988/year) — WP updates, weekly backups, security scan, domain tracking, WhatsApp support 24hrs, 1 content change/month, uptime monitoring
+- Standard ⭐: ₹999/month (₹11,988/year) — Everything in Basic + 3 content updates/month, monthly Google Analytics report, quarterly SEO health check, WhatsApp support 12hrs, emergency restore within 4hrs, GBP updates
+- Premium: ₹1,799/month (₹21,588/year) — Everything in Standard + unlimited content changes, monthly SEO improvement, WhatsApp support 4hrs, emergency restore 1hr, quarterly strategy call (30 min), 1 new add-on feature/year FREE
+
+TERMS & CONDITIONS (key points):
+- 50% advance required before work begins, balance on delivery
+- Client provides content (text, images, logo) within 5 days of advance payment
+- Additional revisions billed at ₹500 per revision
+- Full refund if delivery is not made within agreed timeline
+- All disputes subject to Anantapur, AP jurisdiction
+
+REFERRAL OFFER: Refer 1 client who signs up = 3 months Basic AMC free (₹1,497 value). Refer 2 clients = 3 months Standard AMC free.
+
+AREAS SERVED: Anantapur, Tadipatri, Dharmavaram, Hindupur, Guntakal, Kadapa, Kurnool, and all of Andhra Pradesh.
+
+INDUSTRIES: Clinics & Hospitals, Auto Dealers, Coaching Centres, Retail Shops, Logistics & Transport, Restaurants & Hotels, Real Estate, Jewellery & Fashion, Schools & Colleges, Gyms & Fitness, Hardware & Electricals, CA & Legal Firms.
+
+PORTFOLIO:
+- RRP Enterprises & Logistics (rrpenterprises.co.in) — corporate website + RRP-TMS app + client portal + RRP i-Drive GPS fleet tracking app. 500+ vehicles tracked in real-time.
+- Tirumala TVS (tirumalatvs.in) — dealer website with inventory showcase, service bookings, based in Bengaluru.
+
+HOW YOU SHOULD BEHAVE:
+- Be warm, helpful, and conversational — like a knowledgeable local friend
+- Answer questions clearly and concisely — don't overwhelm with walls of text
+- When someone asks about pricing, give the exact figures from the data above
+- Always end with a gentle CTA — suggest they WhatsApp Chandan (+91 91485 29970) or visit rcanantha.com
+- If asked something outside your knowledge, say you'll connect them with Chandan directly
+- Speak in English by default; if the user writes in Telugu or Hindi, respond in that language
+- Never make up information that isn't in your knowledge above
+- You are RC — not ChatGPT, not Claude. You are RC's digital assistant.`;
+
+var rcMessages = [];
+var rcOpen = false;
+var rcGreeted = false;
+
+function rcToggle() {
+  rcOpen = !rcOpen;
+  var win = document.getElementById('rc-bot-window');
+  var badge = document.getElementById('rc-bot-badge');
+  if (rcOpen) {
+    win.classList.add('open');
+    badge.style.display = 'none';
+    if (!rcGreeted) {
+      rcGreeted = true;
+      setTimeout(function() {
+        rcAddMsg('bot', "👋 Hi! I'm <strong>RC</strong>, the digital assistant for RC's Anantha.<br/><br/>I can help you with our website packages, pricing, mobile apps, SEO services, AMC plans — anything about our agency!<br/><br/>What can I help you with today?");
+      }, 300);
+    }
+    setTimeout(function() {
+      var input = document.getElementById('rc-bot-input');
+      if (input) input.focus();
+    }, 400);
+  } else {
+    win.classList.remove('open');
+  }
+}
+
+function rcAddMsg(role, html) {
+  var msgs = document.getElementById('rc-bot-msgs');
+  var div = document.createElement('div');
+  div.className = 'rc-msg ' + role;
+  div.innerHTML = html;
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function rcShowTyping() {
+  var msgs = document.getElementById('rc-bot-msgs');
+  var div = document.createElement('div');
+  div.className = 'rc-msg typing';
+  div.id = 'rc-typing';
+  div.innerHTML = '<div class="rc-dot"></div><div class="rc-dot"></div><div class="rc-dot"></div>';
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function rcHideTyping() {
+  var t = document.getElementById('rc-typing');
+  if (t) t.remove();
+}
+
+function rcChip(el) {
+  var text = el.innerText;
+  document.getElementById('rc-bot-input').value = text;
+  // Hide chips after first use
+  document.getElementById('rc-chips').style.display = 'none';
+  rcSend();
+}
+
+function rcSend() {
+  var input = document.getElementById('rc-bot-input');
+  var text = input.value.trim();
+  if (!text) return;
+  input.value = '';
+
+  // Hide chips
+  document.getElementById('rc-chips').style.display = 'none';
+
+  // Show user message
+  rcAddMsg('user', text);
+
+  // Add to history
+  rcMessages.push({ role: 'user', content: text });
+
+  // Check API key
+  if (RC_API_KEY === 'YOUR_API_KEY_HERE') {
+    rcAddMsg('bot', '⚠️ <strong>Setup needed:</strong> Please add your Anthropic API key in the code. Get a free key at <a href="https://console.anthropic.com" target="_blank" style="color:var(--navy);font-weight:700;">console.anthropic.com</a><br/><br/>Once you add the key, I\'ll be fully functional! 🚀');
+    return;
+  }
+
+  // Show typing
+  rcShowTyping();
+
+  // Call Anthropic API
+  fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': RC_API_KEY,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-direct-browser-access': 'true'
+    },
+    body: JSON.stringify({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 500,
+      system: RC_SYSTEM,
+      messages: rcMessages.slice(-10) // keep last 10 for context
+    })
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(data) {
+    rcHideTyping();
+    if (data.content && data.content[0] && data.content[0].text) {
+      var reply = data.content[0].text;
+      // Convert markdown bold to HTML
+      reply = reply.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+      reply = reply.replace(/\n\n/g, '<br/><br/>');
+      reply = reply.replace(/\n/g, '<br/>');
+      // Add to history
+      rcMessages.push({ role: 'assistant', content: data.content[0].text });
+      rcAddMsg('bot', reply);
+    } else if (data.error) {
+      rcAddMsg('bot', '⚠️ Error: ' + (data.error.message || 'Something went wrong. Please try again.'));
+    }
+  })
+  .catch(function(err) {
+    rcHideTyping();
+    rcAddMsg('bot', '⚠️ Could not connect. Please check your internet connection and try again.<br/><br/>You can also reach Chandan directly on <a href="https://wa.me/919148529970" target="_blank" style="color:var(--navy);font-weight:700;">WhatsApp</a>.');
+  });
+}
+
+// Show welcome badge after 3 seconds if bot not opened
+setTimeout(function() {
+  if (!rcOpen && !rcGreeted) {
+    var badge = document.getElementById('rc-bot-badge');
+    if (badge) { badge.style.display = 'flex'; }
+  }
+}, 3000);
+</script>
+
 </body>
 </html>
