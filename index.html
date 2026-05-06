@@ -1570,7 +1570,7 @@ function rcSend() {
   rcShowTyping();
 
   // ✅ SECURE: calls your own Netlify function — API key never in browser
-  fetch('/.netlify/functions/rcbot', {
+  fetch('https://rcanantha.netlify.app/.netlify/functions/rcbot', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ messages: rcMessages.slice(-10) })
