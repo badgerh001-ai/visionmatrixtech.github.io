@@ -679,11 +679,15 @@ nav{
 }
 .ind-card:hover{border-color:var(--bor3);transform:translateY(-5px);}
 .ind-ico{
-  width:38px;height:38px;border-radius:10px;
-  background:linear-gradient(135deg,rgba(27,58,107,.5),rgba(201,168,76,.1));
-  display:flex;align-items:center;justify-content:center;
-  margin:0 auto 10px;font-size:.95rem;color:var(--gold);
+  width:100%;height:90px;border-radius:9px;
+  overflow:hidden;margin-bottom:10px;
 }
+.ind-ico img{
+  width:100%;height:100%;object-fit:cover;
+  border-radius:9px;opacity:.7;
+  transition:transform .3s,opacity .3s;
+}
+.ind-card:hover .ind-ico img{transform:scale(1.06);opacity:.9;}
 .ind-card h4{font-size:.77rem;font-weight:700;margin-bottom:2px;}
 .ind-card p{font-size:.67rem;color:var(--mut);}
 
@@ -1148,8 +1152,7 @@ footer{background:var(--bg2);border-top:1px solid var(--bor1);padding:52px 20px 
       <a href="#work" class="btn btn-out">See Our Work</a>
     </div>
     <div class="hero-stats" id="hstats">
-      <div class="hs"><span class="hs-n" data-t="10" data-s="+">0+</span><span class="hs-l">Years Experience</span></div>
-      <div class="hs"><span class="hs-n" data-t="2">0</span><span class="hs-l">Live Websites</span></div>
+      <div class="hs"><span class="hs-n" data-t="10" data-s="+">0+</span><span class="hs-l">Yrs in Sales &amp; Marketing</span></div>
       <div class="hs"><span class="hs-n" data-t="500" data-s="+">0+</span><span class="hs-l">Vehicles Tracked</span></div>
       <div class="hs"><span class="hs-n">₹5K</span><span class="hs-l">Starting Price</span></div>
     </div>
@@ -1241,19 +1244,31 @@ footer{background:var(--bg2);border-top:1px solid var(--bor1);padding:52px 20px 
     <div class="proc-grid">
       <div class="proc-card sr">
         <div class="proc-n">01</div>
-        <div class="proc-ico pi1"><i class="fas fa-comments"></i></div>
+        <div style="width:100%;height:130px;border-radius:10px;overflow:hidden;margin-bottom:16px;position:relative;z-index:1;">
+          <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600&h=260&fit=crop&auto=format" 
+               alt="Free Consultation" loading="lazy"
+               style="width:100%;height:100%;object-fit:cover;border-radius:10px;opacity:.75;"/>
+        </div>
         <h3>Free Consultation</h3>
         <p>Tell us about your business. We listen and give you a clear digital plan in plain language — no jargon, no pressure. 15 minutes on WhatsApp.</p>
       </div>
       <div class="proc-card sr">
         <div class="proc-n">02</div>
-        <div class="proc-ico pi2"><i class="fas fa-laptop-code"></i></div>
+        <div style="width:100%;height:130px;border-radius:10px;overflow:hidden;margin-bottom:16px;position:relative;z-index:1;">
+          <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=260&fit=crop&auto=format" 
+               alt="Website Development" loading="lazy"
+               style="width:100%;height:100%;object-fit:cover;border-radius:10px;opacity:.75;"/>
+        </div>
         <h3>We Build It</h3>
         <p>Delivered in 7–15 days with milestone checkpoints. You review, we refine. Pay only for what is complete and working.</p>
       </div>
       <div class="proc-card sr">
         <div class="proc-n">03</div>
-        <div class="proc-ico pi3"><i class="fas fa-chart-line"></i></div>
+        <div style="width:100%;height:130px;border-radius:10px;overflow:hidden;margin-bottom:16px;position:relative;z-index:1;">
+          <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=260&fit=crop&auto=format" 
+               alt="Business Growth" loading="lazy"
+               style="width:100%;height:100%;object-fit:cover;border-radius:10px;opacity:.75;"/>
+        </div>
         <h3>You Grow</h3>
         <p>Go live and start receiving customers online. We stay by your side for support, updates, and scaling your digital presence.</p>
       </div>
@@ -1481,12 +1496,36 @@ footer{background:var(--bg2);border-top:1px solid var(--bor1);padding:52px 20px 
     <div class="lbl sr">The Advantage</div>
     <h2 class="h2 sr">Why RC's Anantha <span class="gg">Wins.</span></h2>
     <div class="why-grid">
-      <div class="wc sr"><div class="wc-n">01</div><span class="wc-em">🏆</span><h3>10 Years on the Ground</h3><p>Real sales &amp; marketing experience with Honda, Tata EV, and TVS. I know what makes customers buy — not just how to build websites.</p></div>
-      <div class="wc sr"><div class="wc-n">02</div><span class="wc-em">📍</span><h3>Actually Here in Anantapur</h3><p>Every agency ranking for "web design Anantapur" is from Bangalore or Delhi. I'm physically here, face to face. I know this market.</p></div>
-      <div class="wc sr"><div class="wc-n">03</div><span class="wc-em">⚡</span><h3>7–15 Days, Not 3 Months</h3><p>Big agencies take months. Freelancers disappear. We deliver in 7–15 days with milestone payments — you pay only for what works.</p></div>
-      <div class="wc sr"><div class="wc-n">04</div><span class="wc-em">🤖</span><h3>AI &amp; No-Code Edge</h3><p>AI chatbots, WhatsApp automation, smart CRM — enterprise-level digital tools at Anantapur prices.</p></div>
-      <div class="wc sr"><div class="wc-n">05</div><span class="wc-em">🛡️</span><h3>We Don't Disappear</h3><p>AMC plans, WhatsApp support, a real phone number you can always call. We're your local digital partner — present when something breaks.</p></div>
-      <div class="wc sr"><div class="wc-n">06</div><span class="wc-em">💰</span><h3>Priced for Anantapur</h3><p>Bangalore charges ₹40,000–₹1,50,000 for the same work. We start at ₹5,000 — lean, local, and built for this market.</p></div>
+      <div class="wc sr"><div class="wc-n">01</div><div style="width:100%;height:110px;border-radius:9px;overflow:hidden;margin-bottom:12px;">
+          <img src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=500&h=200&fit=crop&auto=format" alt="Sales Experience" loading="lazy"
+               style="width:100%;height:100%;object-fit:cover;border-radius:9px;opacity:.7;transition:transform .3s;"/>
+        </div>
+        <h3>10 Years on the Ground</h3><p>Real sales &amp; marketing experience with Honda, Tata EV, and TVS. I know what makes customers buy — not just how to build websites.</p></div>
+      <div class="wc sr"><div class="wc-n">02</div><div style="width:100%;height:110px;border-radius:9px;overflow:hidden;margin-bottom:12px;">
+          <img src="https://images.unsplash.com/photo-1553484771-371a605b060b?w=500&h=200&fit=crop&auto=format" alt="Local Business" loading="lazy"
+               style="width:100%;height:100%;object-fit:cover;border-radius:9px;opacity:.7;transition:transform .3s;"/>
+        </div>
+        <h3>Actually Here in Anantapur</h3><p>Every agency ranking for "web design Anantapur" is from Bangalore or Delhi. I'm physically here, face to face. I know this market.</p></div>
+      <div class="wc sr"><div class="wc-n">03</div><div style="width:100%;height:110px;border-radius:9px;overflow:hidden;margin-bottom:12px;">
+          <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=500&h=200&fit=crop&auto=format" alt="Fast Delivery" loading="lazy"
+               style="width:100%;height:100%;object-fit:cover;border-radius:9px;opacity:.7;transition:transform .3s;"/>
+        </div>
+        <h3>7–15 Days, Not 3 Months</h3><p>Big agencies take months. Freelancers disappear. We deliver in 7–15 days with milestone payments — you pay only for what works.</p></div>
+      <div class="wc sr"><div class="wc-n">04</div><div style="width:100%;height:110px;border-radius:9px;overflow:hidden;margin-bottom:12px;">
+          <img src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=500&h=200&fit=crop&auto=format" alt="AI Technology" loading="lazy"
+               style="width:100%;height:100%;object-fit:cover;border-radius:9px;opacity:.7;transition:transform .3s;"/>
+        </div>
+        <h3>AI &amp; No-Code Edge</h3><p>AI chatbots, WhatsApp automation, smart CRM — enterprise-level digital tools at Anantapur prices.</p></div>
+      <div class="wc sr"><div class="wc-n">05</div><div style="width:100%;height:110px;border-radius:9px;overflow:hidden;margin-bottom:12px;">
+          <img src="https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=500&h=200&fit=crop&auto=format" alt="Support" loading="lazy"
+               style="width:100%;height:100%;object-fit:cover;border-radius:9px;opacity:.7;transition:transform .3s;"/>
+        </div>
+        <h3>We Don't Disappear</h3><p>AMC plans, WhatsApp support, a real phone number you can always call. We're your local digital partner — present when something breaks.</p></div>
+      <div class="wc sr"><div class="wc-n">06</div><div style="width:100%;height:110px;border-radius:9px;overflow:hidden;margin-bottom:12px;">
+          <img src="https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=500&h=200&fit=crop&auto=format" alt="Affordable Pricing" loading="lazy"
+               style="width:100%;height:100%;object-fit:cover;border-radius:9px;opacity:.7;transition:transform .3s;"/>
+        </div>
+        <h3>Priced for Anantapur</h3><p>Bangalore charges ₹40,000–₹1,50,000 for the same work. We start at ₹5,000 — lean, local, and built for this market.</p></div>
     </div>
   </div>
 </section>
@@ -1526,18 +1565,18 @@ footer{background:var(--bg2);border-top:1px solid var(--bor1);padding:52px 20px 
     <div class="lbl sr" style="justify-content:center;display:flex;">Industries We Serve</div>
     <h2 class="h2 sr" style="text-align:center;">Built for <span class="gg">Every Business.</span></h2>
     <div class="ind-grid">
-      <div class="ind-card sr"><div class="ind-ico"><i class="fas fa-clinic-medical"></i></div><h4>Clinics</h4><p>Booking, portal</p></div>
-      <div class="ind-card sr"><div class="ind-ico"><i class="fas fa-car"></i></div><h4>Auto Dealers</h4><p>Inventory, drives</p></div>
-      <div class="ind-card sr"><div class="ind-ico"><i class="fas fa-chalkboard-teacher"></i></div><h4>Coaching</h4><p>Courses, fees</p></div>
-      <div class="ind-card sr"><div class="ind-ico"><i class="fas fa-store"></i></div><h4>Retail</h4><p>Catalogue, WhatsApp</p></div>
-      <div class="ind-card sr"><div class="ind-ico"><i class="fas fa-truck"></i></div><h4>Logistics</h4><p>Fleet, billing</p></div>
-      <div class="ind-card sr"><div class="ind-ico"><i class="fas fa-utensils"></i></div><h4>Restaurants</h4><p>Menu, ordering</p></div>
-      <div class="ind-card sr"><div class="ind-ico"><i class="fas fa-building"></i></div><h4>Real Estate</h4><p>Listings, enquiries</p></div>
-      <div class="ind-card sr"><div class="ind-ico"><i class="fas fa-gem"></i></div><h4>Jewellery</h4><p>Gallery, catalogue</p></div>
-      <div class="ind-card sr"><div class="ind-ico"><i class="fas fa-graduation-cap"></i></div><h4>Schools</h4><p>Admissions, events</p></div>
-      <div class="ind-card sr"><div class="ind-ico"><i class="fas fa-dumbbell"></i></div><h4>Gyms</h4><p>Memberships, classes</p></div>
-      <div class="ind-card sr"><div class="ind-ico"><i class="fas fa-tools"></i></div><h4>Hardware</h4><p>Catalogue, dealer</p></div>
-      <div class="ind-card sr"><div class="ind-ico"><i class="fas fa-balance-scale"></i></div><h4>CA &amp; Legal</h4><p>Profile, consult</p></div>
+      <div class="ind-card sr"><div class="ind-ico"><img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=300&h=180&fit=crop&auto=format" alt="Medical Clinic" loading="lazy"/></div><h4>Clinics</h4><p>Booking, portal</p></div>
+      <div class="ind-card sr"><div class="ind-ico"><img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?w=300&h=180&fit=crop&auto=format" alt="Auto Dealer" loading="lazy"/></div><h4>Auto Dealers</h4><p>Inventory, drives</p></div>
+      <div class="ind-card sr"><div class="ind-ico"><img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=300&h=180&fit=crop&auto=format" alt="Coaching Centre" loading="lazy"/></div><h4>Coaching</h4><p>Courses, fees</p></div>
+      <div class="ind-card sr"><div class="ind-ico"><img src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?w=300&h=180&fit=crop&auto=format" alt="Retail Store" loading="lazy"/></div><h4>Retail</h4><p>Catalogue, WhatsApp</p></div>
+      <div class="ind-card sr"><div class="ind-ico"><img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=300&h=180&fit=crop&auto=format" alt="Logistics" loading="lazy"/></div><h4>Logistics</h4><p>Fleet, billing</p></div>
+      <div class="ind-card sr"><div class="ind-ico"><img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=300&h=180&fit=crop&auto=format" alt="Restaurant" loading="lazy"/></div><h4>Restaurants</h4><p>Menu, ordering</p></div>
+      <div class="ind-card sr"><div class="ind-ico"><img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=300&h=180&fit=crop&auto=format" alt="Real Estate" loading="lazy"/></div><h4>Real Estate</h4><p>Listings, enquiries</p></div>
+      <div class="ind-card sr"><div class="ind-ico"><img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?w=300&h=180&fit=crop&auto=format" alt="Jewellery" loading="lazy"/></div><h4>Jewellery</h4><p>Gallery, catalogue</p></div>
+      <div class="ind-card sr"><div class="ind-ico"><img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=300&h=180&fit=crop&auto=format" alt="School" loading="lazy"/></div><h4>Schools</h4><p>Admissions, events</p></div>
+      <div class="ind-card sr"><div class="ind-ico"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=300&h=180&fit=crop&auto=format" alt="Gym" loading="lazy"/></div><h4>Gyms</h4><p>Memberships, classes</p></div>
+      <div class="ind-card sr"><div class="ind-ico"><img src="https://images.unsplash.com/photo-1504148455328-c376907d081c?w=300&h=180&fit=crop&auto=format" alt="Hardware" loading="lazy"/></div><h4>Hardware</h4><p>Catalogue, dealer</p></div>
+      <div class="ind-card sr"><div class="ind-ico"><img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=300&h=180&fit=crop&auto=format" alt="Legal CA" loading="lazy"/></div><h4>CA &amp; Legal</h4><p>Profile, consult</p></div>
     </div>
     <div style="text-align:center;margin-top:24px;" class="sr">
       <a href="https://wa.me/919148529970?text=Hi%20Chandan,%20I%20want%20to%20discuss%20a%20digital%20solution%20for%20my%20business" class="btn btn-out" target="_blank" rel="noopener"><i class="fab fa-whatsapp"></i> Tell Us About Your Business</a>
