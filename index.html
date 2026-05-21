@@ -1,1 +1,141 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisionMatrix Tech — We'll Be Right Back</title>
+    <meta name="description" content="VisionMatrix Tech is undergoing maintenance. Contact us on WhatsApp for digital services in Anantapur.">
+    
+    <link rel="preconnect" href="https://api.fontshare.com">
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@500,700&f[]=satoshi@400,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <style>
+        :root {
+            --bg-dark: #07090F;
+            --text-light: #FFFFFF;
+            --text-muted: rgba(255, 255, 255, 0.65);
+            --gradient: linear-gradient(120deg, #00C8F0, #00E584);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Satoshi', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            padding: 24px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .logo-wrap {
+            width: 120px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 200, 240, 0.2);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 32px rgba(0, 200, 240, 0.08);
+        }
+
+        .logo-wrap img {
+            width: 80px;
+            height: auto;
+            object-fit: contain;
+        }
+
+        h1 {
+            font-family: 'Clash Display', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .highlight {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            line-height: 1.7;
+            margin-bottom: 40px;
+            max-width: 480px;
+        }
+
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--gradient);
+            color: #fff;
+            text-decoration: none;
+            font-family: 'Clash Display', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 16px 32px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 200, 240, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(0, 200, 240, 0.4);
+        }
+
+        .btn-whatsapp i {
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="logo-wrap">
+            <img src="VisionMatrix.png" alt="VisionMatrix Tech Logo" onerror="this.style.display='none'">
+        </div>
+        
+        <h1>Welcome to <br><span class="highlight">VisionMatrix Tech.</span></h1>
+        
+        <p>Our website is currently under maintenance as we add new information and features. Please check back soon.</p>
+        
+        <a href="https://wa.me/919148529970?text=Hi%20Chandan,%20I%20am%20looking%20for%20a%20digital%20solution%20for%20my%20business." target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
+            <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+        </a>
+    </div>
+
+</body>
+</html>
