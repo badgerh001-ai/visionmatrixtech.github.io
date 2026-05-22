@@ -2,34 +2,6 @@
    VISIONMATRIX TECH — SCRIPT.JS
    ============================================ */
 
-// ─── CUSTOM CURSOR ───
-const cursor = document.getElementById('cursor');
-const cursorDot = document.getElementById('cursorDot');
-
-let mouseX = 0, mouseY = 0;
-let curX = 0, curY = 0;
-
-document.addEventListener('mousemove', (e) => {
-  mouseX = e.clientX;
-  mouseY = e.clientY;
-  cursorDot.style.left = mouseX + 'px';
-  cursorDot.style.top = mouseY + 'px';
-});
-
-function animateCursor() {
-  curX += (mouseX - curX) * 0.12;
-  curY += (mouseY - curY) * 0.12;
-  cursor.style.left = curX + 'px';
-  cursor.style.top = curY + 'px';
-  requestAnimationFrame(animateCursor);
-}
-animateCursor();
-
-document.querySelectorAll('a, button, .service-card, .tech-item').forEach(el => {
-  el.addEventListener('mouseenter', () => cursor.style.transform = 'translate(-50%, -50%) scale(1.6)');
-  el.addEventListener('mouseleave', () => cursor.style.transform = 'translate(-50%, -50%) scale(1)');
-});
-
 // ─── NAV SCROLL ───
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
@@ -75,27 +47,6 @@ function cycleWord() {
 
 setInterval(cycleWord, 2600);
 
-// ─── COUNTER ANIMATION ───
-const counters = document.querySelectorAll('.stat-num');
-let countersStarted = false;
-
-function startCounters() {
-  if (countersStarted) return;
-  countersStarted = true;
-  counters.forEach(counter => {
-    const target = parseInt(counter.dataset.target);
-    const duration = 1600;
-    const steps = 60;
-    const increment = target / steps;
-    let current = 0;
-    const timer = setInterval(() => {
-      current = Math.min(current + increment, target);
-      counter.textContent = Math.round(current);
-      if (current >= target) clearInterval(timer);
-    }, duration / steps);
-  });
-}
-
 // ─── INTERSECTION OBSERVER ───
 const revealEls = document.querySelectorAll('.reveal, .process-step');
 const observer = new IntersectionObserver((entries) => {
@@ -107,15 +58,6 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 
 revealEls.forEach(el => observer.observe(el));
-
-// Counter trigger
-const heroStats = document.querySelector('.hero-stats');
-if (heroStats) {
-  const statsObserver = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting) startCounters();
-  }, { threshold: 0.5 });
-  statsObserver.observe(heroStats);
-}
 
 // ─── TILT EFFECT (service cards) ───
 document.querySelectorAll('[data-tilt]').forEach(card => {
