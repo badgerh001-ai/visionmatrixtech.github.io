@@ -82,7 +82,7 @@ ul { list-style: none; }
 /* VisionMatrix Tech Logo Branding */
 .brand-vision { color: #0056FF; }
 .brand-matrix { color: #00E5FF; }
-.brand-tech { color: #ffffff; } /* Corrected for Dark Mode Legibility */
+.brand-tech { color: #ffffff; }
 
 .nav-links {
   display: flex; align-items: center; gap: 32px;
@@ -349,6 +349,17 @@ ul { list-style: none; }
   font-size: 1.05rem; letter-spacing: 0.08em;
   color: var(--text-muted); white-space: nowrap;
 }
+
+/* Marquee Official Service Colors */
+.marquee-track .mq-web { color: #61DAFB; }
+.marquee-track .mq-bot { color: #10A37F; }
+.marquee-track .mq-wa { color: #25D366; }
+.marquee-track .mq-app { color: #42A5F5; }
+.marquee-track .mq-crm { color: #FF9900; }
+.marquee-track .mq-seo { color: #F24E1E; }
+.marquee-track .mq-ads { color: #E1306C; }
+.marquee-track .mq-brand { color: #F5C842; }
+
 .marquee-track .sep { color: var(--cyan); font-size: 0.6rem; }
 @keyframes marquee { to { transform: translateX(-50%); } }
 
