@@ -736,8 +736,32 @@ ul { list-style: none; }
 @media (max-width: 600px) {
   .hero { padding: calc(var(--nav-h) + 40px) 20px 60px; }
   .section-inner { padding: 0 20px; }
-  .services-grid { grid-template-columns: 1fr; }
-  .service-card.featured { display: flex; flex-direction: column; }
+  
+  /* Services 2x2 Mobile Grid Optimization */
+  .services-grid { 
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 12px; 
+  }
+  .service-card.featured { 
+    grid-column: span 2; 
+    display: flex; flex-direction: column; 
+  }
+  .service-img { height: 120px; }
+  .service-card.featured .service-img { height: 180px; }
+  .service-body { padding: 14px; gap: 6px; }
+  .service-icon { width: 34px; height: 34px; font-size: 0.9rem; border-radius: 8px; }
+  .service-body h3 { font-size: 0.85rem; line-height: 1.2; }
+  .service-body p { 
+    font-size: 0.75rem; 
+    line-height: 1.4; 
+    display: -webkit-box; 
+    -webkit-line-clamp: 3; 
+    -webkit-box-orient: vertical; 
+    overflow: hidden; 
+  }
+  .service-tags { gap: 4px; }
+  .service-tags span { font-size: 0.55rem; padding: 2px 6px; }
+
   .process-steps { grid-template-columns: 1fr; gap: 40px; }
   .tech-logos { grid-template-columns: repeat(2, 1fr); }
   .footer-inner { grid-template-columns: 1fr; }
