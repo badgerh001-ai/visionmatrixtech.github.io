@@ -691,6 +691,13 @@ ul { list-style: none; }
 }
 .footer-col ul li a:hover { color: var(--cyan); }
 .footer-col ul li i { font-size: 0.85rem; color: var(--text-dim); }
+
+/* Footer Contact Icons Official Colors */
+.footer-col ul li .fa-phone { color: #42A5F5; }
+.footer-col ul li .fa-whatsapp { color: #25D366; }
+.footer-col ul li .fa-building { color: #F5C842; }
+.footer-col ul li .fa-map-marker-alt { color: #EA4335; }
+
 .footer-bottom {
   border-top: 1px solid var(--border);
   padding: 24px 32px;
